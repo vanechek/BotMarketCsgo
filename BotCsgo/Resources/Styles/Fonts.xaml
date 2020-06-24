@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:BotCsgo.Styles"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+
+    <FontFamily x:Key="DefaultFont">Roboto Condensed</FontFamily>
+    <system:Double x:Key="MenuSizeFont">16</system:Double>
+    <system:Double x:Key="TopSizeFont">18</system:Double>
+    <system:Double x:Key="MainFontSize">14</system:Double>
+    <system:Double x:Key="BottomSizeFont">16</system:Double>
+    <FontFamily x:Key="ButtonFont">Tahoma</FontFamily>
+
+    <system:String x:Key="FontKey">&#128273;</system:String>
+    <system:String x:Key="FontInventory">&#xf007;</system:String>
+</ResourceDictionary>

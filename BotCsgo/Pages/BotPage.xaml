@@ -1,0 +1,129 @@
+﻿ <Page x:Class="BotCsgo.Pages.BotPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BotCsgo.Pages"
+      xmlns:converter="clr-namespace:BotCsgo.Converter"
+      mc:Ignorable="d" 
+      MinHeight="700" MinWidth="1050"
+      Height="Auto" Width="Auto"
+      Title="BotPage" DataContext="{Binding BotPageModel, Source={StaticResource ViewModelLocator}}">
+     <Page.Resources>
+    <converter:ExecutedValueConverter x:Key="ExecutedValueConverter"/>
+</Page.Resources>
+
+<Border Background="White"  TextBlock.FontFamily="{StaticResource DefaultFont}" TextBlock.FontSize="{StaticResource MainFontSize}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition  Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"  Grid.Column="0" VerticalAlignment="Top" Name="SteamPanel">
+            <TextBlock Text="Steam" HorizontalAlignment="Center" FontWeight="DemiBold" FontSize="16"/>
+            <TextBlock Text="Login"/>
+            <TextBox Text="{Binding LoginBox}"/>
+            <TextBlock Text="Password"/>
+            <TextBox Text="{Binding PassBox}"/>
+            <TextBlock Text="Трейд-ссылка"/>
+            <TextBlock Text="Токен"/>
+            <TextBox Text="{Binding TokenTrade}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Name="MarketPanel">
+            <TextBlock Text="Market" HorizontalAlignment="Center" FontWeight="DemiBold" FontSize="16"/>
+            <TextBlock Text="Порог Автопокупки"/>
+            <TextBox Text="{Binding AutoOrderMax}"/>
+            <StackPanel Margin="5">
+                <CheckBox Content="Изменение ордеров" IsChecked="{Binding AutoOrders}"/>
+                <CheckBox Content="Изменение цен инвенторя" IsChecked="{Binding AutoPriceInventory}"/>
+                <CheckBox Content="АвтоПринятие дропа" IsChecked="{Binding AutoAcceptTrade}"/>
+            </StackPanel>
+            <TextBlock Text="Задержка в секундах"/>
+            <TextBox Text="{Binding FreezeBox, FallbackValue=30}"/>
+            <Button Content="Сохранить настройки" Style="{StaticResource MarketCSGOButton}" Command="{Binding SaveConfiguration}"/>
+            <Button Content="Старт" Command="{Binding Start}" HorizontalAlignment="Stretch" Margin="5" Style="{StaticResource MarketCSGOButton}" Width="120" Visibility="{Binding StartButtonVisiability}"/>
+            <Button Content="Стоп" Command="{Binding Stop}" Style="{StaticResource MarketCSGOButton}" HorizontalAlignment="Stretch" Margin="5" Width="120" Visibility="{Binding StopButtonVisiability}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.RowSpan="2">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="450">
+                <ItemsControl 
+                          ItemsSource="{Binding ListOrders, Mode=TwoWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="3"
+                        Padding="5">
+                                <StackPanel Orientation="Horizontal"
+                                            TextBlock.FontSize="17" TextBlock.LineHeight="11">
+                                    <TextBlock Text="{Binding I_market_hash_name, FallbackValue=123}" Width="585"/>
+                                    <TextBlock Text="{Binding O_price, FallbackValue=123}" Width="80" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding Info}" Width="100" TextAlignment="Center"/>
+                                    <Button Content="Удалить" Command="{Binding DataContext.DeleteOrder, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" CommandParameter="{Binding}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </ScrollViewer>
+        </StackPanel>
+
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Row="0">
+                <TextBlock Text="История ваших покупок на площадке" FontSize="18" FontWeight="Bold" />
+                <Border x:Name="HistoryLog" Height="Auto">
+                    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
+                        <ItemsControl  BorderThickness="0" ItemsSource="{Binding ListOrdersLog, Mode=TwoWay, FallbackValue=1}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="3"
+                                            Padding="5" 
+                                            TextBlock.FontSize="17" TextBlock.LineHeight="11" Width="108" Height="87">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{Binding Image}"/>
+                                        </Border.Background>
+
+                                        <StackPanel Orientation="Vertical" TextBlock.FontSize="17" TextBlock.LineHeight="11" Height="Auto" Width="Auto">
+                                            <TextBlock Text="Покупка" FontSize="12"/>
+                                            <TextBlock Text="{Binding Price, FallbackValue=1}" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Executed, Converter={StaticResource ExecutedValueConverter}}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Логи бота" HorizontalAlignment="Center" FontWeight="DemiBold" FontSize="16"/>
+                <ScrollViewer VerticalScrollBarVisibility="Visible" Height="75" Width="Auto">
+                    <TextBlock Text="{Binding TextLog}" Width="Auto" Height="Auto" FontSize="11" HorizontalAlignment="Left"/>
+                </ScrollViewer>
+            </StackPanel>
+
+        </Grid>
+
+    </Grid>
+</Border>
+</Page>

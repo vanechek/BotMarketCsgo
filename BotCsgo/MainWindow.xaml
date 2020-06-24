@@ -1,0 +1,145 @@
+﻿<Window x:Class="BotCsgo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BotCsgo"
+        xmlns:converter ="clr-namespace:BotCsgo.Converter"
+        xmlns:usmc="clr-namespace:BotCsgo.UserControls.MenuControl"
+        xmlns:us="clr-namespace:BotCsgo.UserControls"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        mc:Ignorable="d"
+        MinHeight="{Binding WindowMinHeight}"
+        MinWidth="{Binding WindowMinWidth}"
+        Icon="/BotCsgo;component/Resources/Image/favicon_csgo.png"
+        Title="Бот макретксго" Height="902" Width="1070" WindowStartupLocation="CenterScreen">
+
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+                      CaptionHeight="{Binding WindowCaptionHeight, FallbackValue=50}"
+                      ResizeBorderThickness="{Binding WindowResizeBorderThickness, FallbackValue=6}"
+                      GlassFrameThickness="0"
+            CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"
+                      />
+    </WindowChrome.WindowChrome>
+
+
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Border>
+
+                <Grid>
+
+                    <Border Background="White">
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="1" Opacity="1"/>
+                        </Border.Effect>
+                    </Border>
+
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="{Binding TitleHeightLenght, FallbackValue=50}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+
+                        <Grid Grid.Row="0" Background="#FF3892A0" Name="Title">
+
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" FontFamily="Aldhabi" Foreground="White" Margin="5">MARKETCSGOBOT</TextBlock>
+
+                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" >
+                                <Button Content="_" Style="{StaticResource WindowButton}" Command="{Binding HideWindow}"/>
+                                <Button Content="[ ]" Style="{StaticResource WindowButton}" Command="{Binding FullScreenWindow}"/>
+                                <Button Content="X" Style="{StaticResource WindowButton}" Command="{Binding CloseWindow}"/>
+                            </StackPanel>
+
+                        </Grid>
+
+                        <Grid Grid.Row="2" Name="MainContent">
+                            <ContentPresenter/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </Window.Template>
+
+    <Window.Resources>
+        <converter:ApplicationPageValueConverter x:Key="PageConverter"/>
+        <Style TargetType="TextBlock" x:Key="MenuTextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Roboto Condensed"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10"/>
+            <Style.Triggers>
+                <Trigger  Property="IsMouseOver" Value="true">
+                    <Setter Property="TextBlock.TextDecorations" Value="Underline"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+
+    <Border>
+
+        <Grid x:Name="TopMenu">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <usmc:MenuControl Grid.Row="0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock Text="МОИ ВЕЩИ" Style="{StaticResource MenuTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding OpenMyInventoryView}" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                    <TextBlock Text="БОТ" Style="{StaticResource MenuTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding OpenBotPage}" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                    <TextBlock Text="ПОКУПКА ВЕЩЕЙ" Style="{StaticResource MenuTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding OpenBuyItemsPage}" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                    <TextBlock Text="Поиск вещей с наклейками" Style="{StaticResource MenuTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding OpenItemWithSticker}" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                </StackPanel>
+            </usmc:MenuControl>
+
+            <Grid Grid.Row="1" Name="ManeContent">
+                <Border>
+
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="0" Opacity="1"/>
+                    </Border.Effect>
+
+                    <Frame 
+                        IsEnabled="{Binding IsEnabled}"
+                        Content="{Binding CurrentPage}"
+                        NavigationUIVisibility="Hidden"
+                        Opacity="{Binding MainContentOpacity}"
+                        Background="{Binding MainContentBackground}"/>
+                </Border>
+                <Grid Name="NoticeGrid" Width="270" Height="600" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                  <us:ListNoticeControl/>
+                </Grid>
+               
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

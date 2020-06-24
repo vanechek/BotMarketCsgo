@@ -1,0 +1,99 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:BotCsgo.Resources.Styles">
+
+
+    <Style TargetType="TextBox" x:Key="ApiTextbox" x:Name="ApibOX">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="{TemplateBinding Background}"
+                                BorderBrush="#FF83C5CA"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+
+                        <Grid>
+                            <ScrollViewer Margin="3"
+                                              x:Name="PART_ContentHost"
+                                              HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14">
+                            </ScrollViewer>
+                            
+                            <StackPanel Orientation="Horizontal" >
+                                <Grid Background="#FF83C5CA" Width="30" Name="KeyIcon">
+                                    <TextBlock Text="{StaticResource FontKey}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <TextBlock
+                                    Background="Transparent"
+                                    x:Name="Hide"
+                                    IsHitTestVisible="False"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    TextAlignment="{TemplateBinding TextAlignment}"
+                                    Text="{TemplateBinding Tag}"
+                                    Foreground="Gray"
+                                    Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="Hide" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="TextBox.PreviewGotKeyboardFocus" x:Name="ApiText">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard x:Name="GotFocus">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="KeyIcon" From="30" To="0" Duration="0:0:1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="TextBox.PreviewLostKeyboardFocus">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="KeyIcon" From="0" To="30" Duration="0:0:1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="TextBox" x:Key="DefaultBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="{TemplateBinding Background}"
+                                BorderBrush="#FF83C5CA"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+
+                        <Grid>
+                            <ScrollViewer Margin="3"
+                                              x:Name="PART_ContentHost"
+                                              HorizontalAlignment="Left">
+                            </ScrollViewer>
+
+
+                            <TextBlock
+                                    Background="Transparent"
+                                    x:Name="Hide"
+                                    IsHitTestVisible="False"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    TextAlignment="{TemplateBinding TextAlignment}"
+                                    Text="{TemplateBinding Tag}"
+                                    Foreground="Gray"
+                                    Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="Hide" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

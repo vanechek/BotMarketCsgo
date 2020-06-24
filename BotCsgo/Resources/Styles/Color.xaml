@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:BotCsgo.Styles">
+
+    <SolidColorBrush x:Key="DefaultBrush" Color="#FF83C5CA"/>
+    <Color x:Key="DefaultColor">#FF83C5CA</Color>
+
+    <SolidColorBrush x:Key="DarkBrush" Color="#FF74BEC5"/>
+    <Color x:Key="DarkColor">#FF74BEC5</Color>
+
+    <SolidColorBrush x:Key="LightBrush" Color="#FFCAE7E9"/>
+    <Color x:Key="LightColor">#FFCAE7E9</Color>
+
+    <SolidColorBrush x:Key="NameBuyItemBrush" Color="#E5FFEFA3"/>
+    <Color x:Key="NameBuyItemColor">#E5FFEFA3</Color>
+
+    <SolidColorBrush x:Key="PriceBuyItemBrush" Color="#aa4000"/>
+    <Color x:Key="PriceBuyItemColor">#aa400</Color>
+</ResourceDictionary>

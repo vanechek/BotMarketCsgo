@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="BotCsgo.UserControls.MenuControl.MenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BotCsgo.UserControls.MenuControl"
+             xmlns:vm="clr-namespace:BotCsgo.UserControls.MenuControl"  
+             mc:Ignorable="d" 
+             MinHeight="50" MinWidth="1070"
+             Height="Auto" Width="Auto">
+
+
+    <UserControl.Template>
+        
+        <ControlTemplate TargetType="UserControl">
+            
+            <Border Background="White">
+               
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="1" Opacity="1"/>
+                </Border.Effect>
+                
+                <Grid Name="Menu" TextBlock.FontFamily="{StaticResource DefaultFont}">
+                    
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/BotCsgo;component/Resources/Image/header_market_csgo.jpg" />
+                    </Grid.Background>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <StackPanel TextBlock.FontFamily="{StaticResource DefaultFont}" Grid.Column="2" Orientation="Horizontal">
+                        <Grid>
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="280"/>
+                                <ColumnDefinition Width="170"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock x:Name="ApiBlock" Text="{Binding KeyIsFinded, FallbackValue=валидный}" VerticalAlignment="Center" Foreground="Green" HorizontalAlignment="Left" FontSize="{StaticResource MenuSizeFont}" Grid.Column="0"/>
+                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Grid.Column="0" >
+                                <TextBox Width="160" Height="30" Style="{StaticResource ApiTextbox}" Tag="Ваш api ключ"> 
+                                    <TextBox.Text>
+                                        <Binding Path="ApiKey">
+                                            <Binding.ValidationRules>
+                                                <DataErrorValidationRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+                            <TextBlock HorizontalAlignment="Right" Text="{Binding StringFormat={}{0} Р, Path=Balance}"  FontSize="18" FontWeight="Bold" Grid.Column="1" Foreground="White" VerticalAlignment="Center" TextAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <ContentPresenter Grid.Column="0">
+                     
+                    </ContentPresenter>
+
+                 
+
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Template>
+
+
+</UserControl>

@@ -1,0 +1,100 @@
+﻿<Page x:Class="BotCsgo.Pages.FindItemWithPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BotCsgo.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="900"
+      Title="FindItemWithPage" DataContext="{Binding FindItemWithViewModel, Source={StaticResource ViewModelLocator}}">
+
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <TextBlock Text="Стикеры" FontSize="18" FontWeight="Medium" Grid.Column="0" Width="150"/>
+            <ComboBox SelectedItem="{Binding SelectedCategory}">
+                <ComboBoxItem Content="Без стикеров"/>
+                <ComboBoxItem Content="С стикерами"/>
+                <ComboBoxItem Content="С одинаковыми стикерами"/>
+            </ComboBox>
+            <Button Command="{Binding ClickToParse}" Content="Найти" Style="{StaticResource MarketCSGOButton}"/>
+        </StackPanel>
+        <ScrollViewer  Width="Auto" Height="Auto" MaxHeight="1020" Grid.Column="1">
+            <ItemsControl ItemsSource="{Binding ListItems, FallbackValue=1}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Width="Auto"  Height="120">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="1" Opacity="0.5"/>
+                            </Border.Effect>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.RowSpan="3" Width="120" Orientation="Vertical">
+                                    <Image Source="{Binding Path}" Grid.Column="0" Width="Auto" Height="80"/>
+                                    <TextBlock Text="{Binding Price}" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="{StaticResource MainFontSize}" FontWeight="Medium"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding Market_hash_name}" HorizontalAlignment="Left" FontSize="16" FontFamily="{StaticResource DefaultFont}" Grid.Column="1" Grid.Row="0"/>
+                                <ItemsControl Width="600" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" ItemsSource="{Binding Stickers, FallbackValue=1}" BorderThickness="2" BorderBrush="Gray">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Width="Auto" Height="Auto">
+                                                <StackPanel Orientation="Vertical">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="{Binding Path}" Width="80" Height="40"/>
+                                                        <TextBlock Text="{Binding Price}" Visibility="{Binding StickerPriceVisiability}"/>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{Binding Title}" HorizontalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.Style>
+                                        <Style TargetType="ItemsControl">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type ItemsControl}">
+                                                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true" CornerRadius="5" Padding="5">
+                                                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ItemsControl.Style>
+                                </ItemsControl>
+                                <Button Style="{StaticResource MarketCSGOButton}" Grid.Row="2" Grid.Column="1" Content="Узнать доп инфо" HorizontalAlignment="Center" Command="{Binding DataContext.ClickToFindInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" FontSize="11" CommandParameter="{Binding}"/>
+                                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Visibility="{Binding PricesVisiability}">
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Market_price}"/>
+                                        <Image Source="/BotCsgo;component/Resources/Image/favicon_csgo.png"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding SteamPrice}"/>
+                                        <Image Source="/BotCsgo;component/Resources/Image/SteamIcon.ico" Width="20" Height="18"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding SumPricesStickers}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Page>
